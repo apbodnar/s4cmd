@@ -1277,7 +1277,7 @@ class ThreadUtil(S3Handler, ThreadPool.Worker):
     try:
       return self.s3.head_object(Bucket=s3url.bucket, Key=s3url.path)
     except BotoClient.ClientError as e:
-      if e.response['ResponseMetadata']['HTTPStatusCode'] == 404:
+      if e.response['ResponseMetadata']['HTTPStatusCode'] in [404, 403]:
         return None
       else:
         raise e
